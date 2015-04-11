@@ -24,6 +24,9 @@ fi
 ## node
 if [ -d $HOME/.nodebrew ];then
     export PATH=$PATH:$HOME/.nodebrew/current/bin
+    npm-exec() {
+        PATH="$(npm bin):$PATH" "$@"
+    }
 fi
 
 ## ruby
@@ -31,7 +34,7 @@ if [ -d $HOME/.rbenv ];then
     export PATH=$PATH:$HOME/.rbenv/shims
     eval "$(rbenv init -)"
     gem-install() {
-        gem install $1 && rbenv rehash
+        gem install $@ && rbenv rehash
     }
 fi
 
@@ -60,7 +63,7 @@ alias be='bundle exec'
 # perl
 alias ce='carton exec'
 # node
-alias ne="PATH=$(npm bin):$PATH"
+alias ne="npm-exec"
 # rails
 alias -g RET='RAILS_ENV=test'
 alias -g RED='RAILS_ENV=development'
