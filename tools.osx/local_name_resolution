@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# .localの名前解決問題
+discoveryutil mdnsactivedirectory yes

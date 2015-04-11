@@ -1,0 +1,75 @@
+export EDITOR=$(which vim)
+
+export PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
+export PATH=$PATH:$HOME/tools
+
+
+## MySQL
+mycolor=$'\e[1;31m'
+clear=$'\e[0m'
+export MYSQL_PS1="$mycolor\u@\d > $clear"
+
+## perl
+if [ -d $HOME/perl5 ];then
+    source $HOME/perl5/perlbrew/etc/bashrc
+    export PERL5LIB=$HOME/perl5/lib/perl5:$HOME/perl5${PERL5LIB+:$PERL5LIB} 
+    export PATH=$PATH:$HOME/perl5/bin
+fi
+
+## go
+if [ -d $HOME/.go ];then
+    export PATH=$PATH:$HOME/.go/bin
+fi
+
+## node
+if [ -d $HOME/.nodebrew ];then
+    export PATH=$PATH:$HOME/.nodebrew/current/bin
+fi
+
+## ruby
+if [ -d $HOME/.rbenv ];then
+    export PATH=$PATH:$HOME/.rbenv/shims
+    eval "$(rbenv init -)"
+    gem-install() {
+        gem install $1 && rbenv rehash
+    }
+fi
+
+## Java
+if [ -f /usr/libexec/java_home ];then
+    export JAVA_HOME=`/usr/libexec/java_home`
+fi
+
+
+case "${OSTYPE}" in
+## Mac
+darwin*)
+    [ -f $HOME/dotfiles/.zshrc.osx ] && source $HOME/dotfiles/.zshrc.osx
+    ;;
+## Linux
+linux*)
+    [ -f $HOME/dotfiles/.zshrc.linux ] && source $HOME/dotfiles/.zshrc.linux
+    ;;
+esac
+
+
+## alias
+alias ks='ls'
+# ruby
+alias be='bundle exec'
+# perl
+alias ce='carton exec'
+# node
+alias ne="PATH=$(npm bin):$PATH"
+# rails
+alias -g RET='RAILS_ENV=test'
+alias -g RED='RAILS_ENV=development'
+alias -g RES='RAILS_ENV=staging'
+alias -g REP='RAILS_ENV=production'
+# git
+alias g='git'
+alias gi='git'
+alias gca='git commit -a'
+
+
+[ -f $HOME/.zshrc.local ] && source $HOME/.zshrc.local

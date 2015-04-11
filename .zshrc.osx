@@ -1,0 +1,14 @@
+# alias
+alias rm='rmtrash'
+alias orgrm='/bin/rm'
+alias sed='gsed'
+alias readlink='greadlink'
+alias awk='gawk'
+alias date='gdate'
+alias grep='ggrep --color=always'
+alias gzip='/usr/local/bin/gzip'
+
+[ -d $HOME/dotfiles/tools.osx ] && export PATH=$PATH:$HOME/dotfiles/tools.osx
+
+# Android
+export PATH=$PATH:$HOME/Library/Android/sdk/platform-tools
