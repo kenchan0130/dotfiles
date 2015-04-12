@@ -1,3 +1,19 @@
+function update_dotfiles {
+    pushd . &> /dev/null
+    cd $HOME/dotfiles
+    
+    old_hash=`git log -1 "--pretty=format:%H" 2> /dev/null`
+    git pull -q &> /dev/null
+    new_hash=`git log -1 "--pretty=format:%H" 2> /dev/null`
+    
+    if [ "${old_hash}" != "${new_hash}" ]; then
+        ./setup.sh
+    fi
+    
+    popd &> /dev/null
+}
+update_dotfiles
+
 export EDITOR=$(which vim)
 
 export PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
