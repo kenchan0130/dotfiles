@@ -7,6 +7,7 @@ function update_dotfiles {
     new_hash=`git log -1 "--pretty=format:%H" 2> /dev/null`
     
     if [ "${old_hash}" != "${new_hash}" ]; then
+        echo "Updated dotfiles!"
         ./setup.sh
     fi
     
