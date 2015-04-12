@@ -79,6 +79,8 @@ let g:NERDTreeIgnore = ['\.clean$', '\.swp$', '\.bak$', '\~$']
 " 引数があれば非表示
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" マウスサポート
+let g:NERDTreeMouseMode=3 
 
 " airsave
 " ------------------------------------
@@ -198,6 +200,9 @@ autocmd BufNewFile,BufRead *.coffee set nowrap tabstop=2 shiftwidth=2 softtabsto
 
 " HTML
 autocmd BufNewFile,BufRead *.html set nowrap tabstop=2 shiftwidth=2 softtabstop=2
+
+" マウス操作を許可
+set mouse=a
 
 " tagsの設定
 set tags=.tags
