@@ -27,7 +27,6 @@ NeoBundle 'scrooloose/syntastic'
 NeoBundle 'syui/airsave.vim'
 NeoBundle 'mattn/emmet-vim'
 NeoBundle 'cakebaker/scss-syntax.vim'
-NeoBundle 'maksimr/vim-jsbeautify'
 NeoBundle 'einars/js-beautify'
 NeoBundle 'jtratner/vim-flavored-markdown'
 NeoBundle 'kannokanno/previm'
@@ -43,6 +42,7 @@ NeoBundle 'szw/vim-tags'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'OrangeT/vim-csharp'
 NeoBundle '5t111111/neat-json.vim'
+NeoBundle 'Chiel92/vim-autoformat'
 
 
 " vim-multiple-cursors
@@ -60,12 +60,10 @@ vnoremap <silent> == =
 " ------------------------------------
 autocmd BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
 
-" jsbeautify
-" 要nodejs
+" vim-autoformat
+" See also: https://github.com/Chiel92/vim-autoformat
 " ------------------------------------
-autocmd FileType javascript vnoremap <buffer> <C-f> :call RangeJsBeautify()<CR>
-autocmd FileType html vnoremap <buffer> <C-f> :call RangeHtmlBeautify()<CR>
-autocmd FileType css vnoremap <buffer> <C-f> :call RangeCSSBeautify()<CR>
+noremap <silent> :af :<C-u>Autoformat<CR>
 
 " nerdtree
 " ------------------------------------
@@ -185,11 +183,8 @@ smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 autocmd BufNewFile,BufRead *.rb  set nowrap tabstop=2 shiftwidth=2 softtabstop=2
 autocmd BufNewFile,BufRead *.erb set nowrap tabstop=2 shiftwidth=2 softtabstop=2
 autocmd BufNewFile,BufRead *.thor set nowrap tabstop=2 shiftwidth=2 softtabstop=2 filetype=ruby
-autocmd BufNewFile,BufRead Gemfile set nowrap tabstop=2 shiftwidth=2 softtabstop=2 filetype=ruby
-autocmd BufNewFile,BufRead Rakefile set nowrap tabstop=2 shiftwidth=2 softtabstop=2 filetype=ruby
-autocmd BufNewFile,BufRead Schemafile set nowrap tabstop=2 shiftwidth=2 softtabstop=2 filetype=ruby
-autocmd BufNewFile,BufRead Vagrantfile set nowrap tabstop=2 shiftwidth=2 softtabstop=2 filetype=ruby
-autocmd BufNewFile,BufRead Berksfile set nowrap tabstop=2 shiftwidth=2 softtabstop=2 filetype=ruby
+autocmd BufNewFile,BufRead *file set nowrap tabstop=2 shiftwidth=2 softtabstop=2 filetype=ruby
+autocmd BufNewFile,BufRead Movefile set nowrap tabstop=2 shiftwidth=2 softtabstop=2 filetype=yaml
 
 " YAML
 autocmd BufNewFile,BufRead *.yml set nowrap tabstop=2 shiftwidth=2 softtabstop=2
@@ -200,6 +195,11 @@ autocmd BufNewFile,BufRead *.coffee set nowrap tabstop=2 shiftwidth=2 softtabsto
 
 " HTML
 autocmd BufNewFile,BufRead *.html set nowrap tabstop=2 shiftwidth=2 softtabstop=2
+
+" SCSS/SASS
+autocmd BufNewFile,BufRead *.scss set nowrap tabstop=2 shiftwidth=2 softtabstop=2
+autocmd BufNewFile,BufRead *.sass set nowrap tabstop=2 shiftwidth=2 softtabstop=2
+
 
 " マウス操作を許可
 set mouse=a
