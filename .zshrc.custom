@@ -72,9 +72,11 @@ linux*)
     ;;
 esac
 
-
 ## alias
 alias ks='ls'
+alias grep='grep --color=always'
+alias df='df -h'
+alias ps='ps --sort=start_time'
 # ruby
 alias be='bundle exec'
 # perl
@@ -89,7 +91,9 @@ alias -g REP='RAILS_ENV=production'
 # git
 alias g='git'
 alias gi='git'
-alias gca='git commit -a'
+alias gcm='git commit -m'
+alias gco='git checkout'
 
 
+## local
 [ -f $HOME/.zshrc.local ] && source $HOME/.zshrc.local

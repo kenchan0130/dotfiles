@@ -5,7 +5,7 @@ alias sed='gsed'
 alias readlink='greadlink'
 alias awk='gawk'
 alias date='gdate'
-alias grep='ggrep --color=always'
+alias grep='ggrep'
 
 [ -d $HOME/dotfiles/tools.osx ] && export PATH=$PATH:$HOME/dotfiles/tools.osx
 
