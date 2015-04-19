@@ -1,16 +1,24 @@
-function recho {
+recho() {
     echo -e "\e[31m$*\e[m";
 }
 
-function gecho {
+gecho() {
     echo -e "\e[32m$*\e[m";
 }
 
-function yecho {
+yecho() {
     echo -e "\e[33m$*\e[m";
 }
 
-function update_dotfiles {
+count-line() {
+    cat "$@" | wc -l | sed 's/^[\t ]*//g'
+}
+
+count-word() {
+    cat "$@" | wc -w | sed 's/^[\t ]*//g'
+}
+
+update_dotfiles() {
     pushd . &> /dev/null
 
     cd $HOME/dotfiles
