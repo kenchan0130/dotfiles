@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FILES=( .zshrc .zshrc.custom .tmux.conf .vimrc .gitignore_global .gemrc )
+FILES=( .zshrc .zshrc.custom .tmux.conf .vimrc .gitignore_global .gemrc .my.cnf )
 DIRECTORIES=( tools )
 
 for file in ${FILES[@]}
