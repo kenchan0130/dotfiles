@@ -11,11 +11,19 @@ yecho() {
 }
 
 count-line() {
-    cat "$@" | wc -l | sed 's/^[\t ]*//g'
+    if [[ -p /dev/stdin ]]; then
+        cat -
+    else
+        cat "$*" 
+    fi | wc -l | sed 's/^[\t ]*//g'
 }
 
 count-word() {
-    cat "$@" | wc -w | sed 's/^[\t ]*//g'
+    if [[ -p /dev/stdin ]]; then
+        cat -
+    else
+        cat "$*" 
+    fi | wc -w | sed 's/^[\t ]*//g'
 }
 
 update_dotfiles() {
@@ -63,7 +71,7 @@ fi
 if [ -d $HOME/.nodebrew ];then
     export PATH=$PATH:$HOME/.nodebrew/current/bin
     npm-exec() {
-        PATH="$(npm bin):$PATH" "$@"
+        PATH="$(npm bin):$PATH" "$*"
     }
     alias ne="npm-exec"
 fi
@@ -73,7 +81,7 @@ if [ -d $HOME/.rbenv ];then
     export PATH=$PATH:$HOME/.rbenv/bin:$HOME/.rbenv/shims
     eval "$(rbenv init -)"
     gem-install() {
-        gem install $@ && rbenv rehash
+        gem install "$*" && rbenv rehash
     }
     alias be='bundle exec'
 fi
