@@ -1,4 +1,4 @@
 #!/bin/bash
 
 # .localの名前解決問題
-sudo discoveryutil mdnsactivedirectory yes
+sudo discoveryutil mdnsactivedirectory yes && sudo discoveryutil udnsflushcaches
