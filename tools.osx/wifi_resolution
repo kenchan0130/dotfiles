@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# wifiが遅くなる問題
+sudo ifconfig awdl0 down && sudo ifconfig awdl0 up
