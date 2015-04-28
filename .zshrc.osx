@@ -6,6 +6,7 @@ alias readlink='greadlink'
 alias awk='gawk'
 alias date='gdate'
 alias grep='ggrep'
+alias tar='gtar'
 
 [ -d $HOME/dotfiles/tools.osx ] && export PATH=$PATH:$HOME/dotfiles/tools.osx
 
