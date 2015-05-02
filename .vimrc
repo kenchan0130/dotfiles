@@ -43,6 +43,7 @@ NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'OrangeT/vim-csharp'
 NeoBundle '5t111111/neat-json.vim'
 NeoBundle 'Chiel92/vim-autoformat'
+NeoBundle 'mxw/vim-jsx'
 
 
 " vim-multiple-cursors
