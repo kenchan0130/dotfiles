@@ -101,6 +101,14 @@ else
     yecho "Not install direnv yet."
 fi
 
+## The fuck
+if type thefuck >/dev/null 2>&1;then
+    alias fuck='$(thefuck $(fc -ln -1))'
+    alias FUCK='$(thefuck $(fc -ln -1))'
+else
+    yecho "Not install thefuck yet."
+fi
+
 
 case "${OSTYPE}" in
 ## Mac
