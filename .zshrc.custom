@@ -82,9 +82,6 @@ fi
 if [ -d $HOME/.rbenv ];then
     export PATH=$PATH:$HOME/.rbenv/bin:$HOME/.rbenv/shims
     eval "$(rbenv init -)"
-    gem-install() {
-        gem install "$@" && rbenv rehash
-    }
     alias be='bundle exec'
     alias bi='bundle install'
 fi
