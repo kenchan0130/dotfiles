@@ -60,12 +60,14 @@ if [ -d $HOME/perl5 ];then
     export PATH=$PATH:$HOME/perl5/bin
     alias ce='carton exec'
     alias ci='carton install'
+else
+    yecho "Not install perl to use perlbrew yet."
 fi
 
 ## Go
-if [ -d $HOME/.go ];then
-    export GOPATH=$PATH:$HOME/.go
-    export PATH=$GOPATH/bin
+if type go >/dev/null 2>&1;then
+    export GOPATH=$HOME/.go
+    export PATH=$PATH:$GOPATH/bin
 fi
 
 ## Node
@@ -102,8 +104,6 @@ fi
 if type thefuck >/dev/null 2>&1;then
     alias fuck='$(thefuck $(fc -ln -1))'
     alias FUCK='$(thefuck $(fc -ln -1))'
-else
-    yecho "Not install thefuck yet."
 fi
 
 
