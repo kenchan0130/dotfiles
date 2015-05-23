@@ -49,6 +49,7 @@ NeoBundle 'tpope/vim-endwise'
 NeoBundle 'vim-scripts/AnsiEsc.vim'
 NeoBundle 'bronson/vim-trailing-whitespace'
 NeoBundle 'basyura/unite-rails'
+NeoBundle 'jiangmiao/auto-pairs'
 
 
 " vim-multiple-cursors
