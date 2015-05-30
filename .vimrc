@@ -50,7 +50,15 @@ NeoBundle 'vim-scripts/AnsiEsc.vim'
 NeoBundle 'bronson/vim-trailing-whitespace'
 NeoBundle 'basyura/unite-rails'
 NeoBundle 'jiangmiao/auto-pairs'
+NeoBundle 'StanAngeloff/php.vim.git'
+NeoBundle 'rhysd/vim-operator-surround', {'depends': ['kana/vim-operator-user']}
 
+
+" vim-operator-surround
+" ------------------------------------
+nmap <silent>sa <Plug>(operator-surround-append)
+nmap <silent>sd <Plug>(operator-surround-delete)
+nmap <silent>sr <Plug>(operator-surround-replace)
 
 " vim-multiple-cursors
 " ------------------------------------
@@ -215,6 +223,9 @@ autocmd BufNewFile,BufRead *.html set nowrap tabstop=2 shiftwidth=2 softtabstop=
 " SCSS/SASS
 autocmd BufNewFile,BufRead *.scss set nowrap tabstop=2 shiftwidth=2 softtabstop=2
 autocmd BufNewFile,BufRead *.sass set nowrap tabstop=2 shiftwidth=2 softtabstop=2
+
+" PHP
+autocmd BufNewFile,BufRead *.php set nowrap noexpandtab tabstop=2 shiftwidth=2 softtabstop=2
 
 
 " マウス操作を許可
