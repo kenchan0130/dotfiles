@@ -14,7 +14,7 @@ count-line() {
     if [[ -p /dev/stdin ]]; then
         cat -
     else
-        cat "$*" 
+        cat "$*"
     fi | wc -l | sed 's/^[\t ]*//g'
 }
 
@@ -22,7 +22,7 @@ count-word() {
     if [[ -p /dev/stdin ]]; then
         cat -
     else
-        cat "$*" 
+        cat "$*"
     fi | wc -w | sed 's/^[\t ]*//g'
 }
 
@@ -37,7 +37,7 @@ update_dotfiles() {
     old_hash=`git log -1 "--pretty=format:%H" 2> /dev/null`
     git pull -q &> /dev/null
     new_hash=`git log -1 "--pretty=format:%H" 2> /dev/null`
-    
+
     if [ "${old_hash}" != "${new_hash}" ]; then
         gecho "Updated dotfiles!"
         ./setup.sh
@@ -56,7 +56,7 @@ export PATH=$PATH:$HOME/tools
 ## Perl
 if [ -d $HOME/perl5 ];then
     source $HOME/perl5/perlbrew/etc/bashrc
-    export PERL5LIB=$HOME/perl5/lib/perl5:$HOME/perl5${PERL5LIB+:$PERL5LIB} 
+    export PERL5LIB=$HOME/perl5/lib/perl5:$HOME/perl5${PERL5LIB+:$PERL5LIB}
     export PATH=$PATH:$HOME/perl5/bin
     alias ce='carton exec'
     alias ci='carton install'
