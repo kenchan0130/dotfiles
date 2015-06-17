@@ -52,6 +52,7 @@ NeoBundle 'basyura/unite-rails'
 NeoBundle 'jiangmiao/auto-pairs'
 NeoBundle 'StanAngeloff/php.vim.git'
 NeoBundle 'rhysd/vim-operator-surround', {'depends': ['kana/vim-operator-user']}
+NeoBundle 'airblade/vim-gitgutter'
 
 
 " vim-operator-surround
