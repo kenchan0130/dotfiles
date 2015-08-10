@@ -152,3 +152,5 @@ alias gre='git reset --merge'
 
 ## local
 [ -f $HOME/.zshrc.local ] && source $HOME/.zshrc.local
+
+return 0
