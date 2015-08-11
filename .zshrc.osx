@@ -27,7 +27,7 @@ if type convert >/dev/null 2>&1;then
         if [ -z "$BUFFER" ]; then
             image_index=$(((RANDOM%$#image_list)+1))
             image_path=$image_list[$image_index]
-            convert $image_path -transparent white -resize "$height"x"$width" -size "$height"x"$width" xc:"#ffffff" +swap -gravity center -composite $display_image_path
+            convert $image_path -resize "$height"x"$width" -size "$height"x"$width" xc:"#353535" +swap -gravity center -composite $display_image_path
             osascript -e "tell application \"iTerm\"
             set current_terminal to (current terminal)
             tell current_terminal
