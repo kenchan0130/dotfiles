@@ -26,6 +26,10 @@ count-word() {
     fi | wc -w | sed 's/^[\t ]*//g'
 }
 
+csv-viewer() {
+    column -s, -t < "$*" | less -#2 -N -S
+}
+
 update_dotfiles() {
     pushd . &> /dev/null
 
