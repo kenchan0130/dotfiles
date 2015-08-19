@@ -27,7 +27,11 @@ count-word() {
 }
 
 csv-viewer() {
-    column -s, -t < "$*" | less -#2 -N -S
+    if [[ -p /dev/stdin ]]; then
+        cat -
+    else
+        cat "$*"
+    fi | sed 's/,,/, ,/g;s/,,/, ,/g' | column -s, -t
 }
 
 update_dotfiles() {
