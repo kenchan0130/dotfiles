@@ -11,7 +11,7 @@ alias tar='gtar'
 [ -d $HOME/dotfiles/tools.osx ] && export PATH=$PATH:$HOME/dotfiles/tools.osx
 
 # 画像を表示する君
-if type convert >/dev/null 2>&1;then
+if type convert >/dev/null 2>&1 && [ -d /Applications/iTerm.app ];then
     display_image_path='/tmp/background.png'
     image_dir="$HOME/dotfiles/background_images/"
     image_list=()
