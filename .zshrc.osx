@@ -21,7 +21,7 @@ if type convert >/dev/null 2>&1 && [ -d /Applications/iTerm.app ];then
             image_list+=("$file_path")
         fi
     done
-    bg() {
+    background-image() {
         width=$(($(tput lines)*10))
         height=$(($(tput cols)*5))
         if [ -z "$BUFFER" ]; then
@@ -43,8 +43,8 @@ if type convert >/dev/null 2>&1 && [ -d /Applications/iTerm.app ];then
             zle accept-line
         fi
     }
-    zle -N bg
-    bindkey '^m' bg
+    zle -N background-image
+    bindkey '^m' background-image
 fi
 
 # Android
