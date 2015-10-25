@@ -54,6 +54,7 @@ NeoBundle 'StanAngeloff/php.vim.git'
 NeoBundle 'rhysd/vim-operator-surround', {'depends': ['kana/vim-operator-user']}
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'Glench/Vim-Jinja2-Syntax'
+NeoBundle 'tpope/vim-surround'
 
 
 " vim-operator-surround
