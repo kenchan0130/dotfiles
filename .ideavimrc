@@ -1,0 +1,10 @@
+" クリップボードとyankを共有
+set clipboard+=unnamed
+
+" 検索時に大文字を含んでいたら大/小を区別
+set smartcase
+
+"x キー削除でデフォルトレジスタに入れない
+nnoremap x "_x
+vnoremap x "_x
+

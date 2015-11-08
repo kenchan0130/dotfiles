@@ -1,6 +1,15 @@
 #!/bin/bash
 
-FILES=( .zshrc .zshrc.custom .tmux.conf .vimrc .gitignore_global .gemrc .my.cnf .editorconfig )
+case "${OSTYPE}" in
+## Mac
+darwin*)
+    FILES=( .zshrc .zshrc.custom .tmux.conf .vimrc .gitignore_global .gemrc .my.cnf .editorconfig .ideavimrc )
+    ;;
+## Linux
+linux*)
+    FILES=( .zshrc .zshrc.custom .tmux.conf .vimrc .gitignore_global .gemrc .editorconfig )
+    ;;
+esac
 DIRECTORIES=( tools )
 
 for file in ${FILES[@]}
