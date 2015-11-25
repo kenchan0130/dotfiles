@@ -68,8 +68,6 @@ if [ -d $HOME/perl5 ];then
     export PATH=$PATH:$HOME/perl5/bin
     alias ce='carton exec'
     alias ci='carton install'
-else
-    yecho "Not install perl to use perlbrew yet."
 fi
 
 ## Go
@@ -104,8 +102,6 @@ fi
 ## Direnv
 if type direnv >/dev/null 2>&1;then
     eval "$(direnv hook zsh)"
-else
-    yecho "Not install direnv yet."
 fi
 
 ## The fuck
