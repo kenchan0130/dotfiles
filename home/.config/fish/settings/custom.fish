@@ -49,7 +49,7 @@ set -xg FISH_ROOT $HOME/.config/fish
 
 ## Perl
 if test -d $HOME/perl5
-    bass source $HOME/perl5/perlbrew/etc/bashrc
+    source $HOME/perl5/perlbrew/etc/perlbrew.fish
     bass 'export PERL5LIB=$HOME/perl5/lib/perl5:$HOME/perl5${PERL5LIB+:$PERL5LIB}'
     set -xg PATH $PATH $HOME/perl5/bin
     alias ce='carton exec'
