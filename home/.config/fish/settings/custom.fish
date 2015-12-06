@@ -108,7 +108,7 @@ end
 alias ks='ls'
 alias grep='grep --color=always'
 alias df='df -h'
-alias relogin='exec $SHELL -l'
+alias relogin='$SHELL -l'
 # rails
 alias RET='RAILS_ENV=test'
 alias RED='RAILS_ENV=development'
