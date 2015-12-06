@@ -74,15 +74,10 @@ end
 
 ## Ruby
 if test -d $HOME/.rbenv
+    rbenv init - | source
     set -xg PATH $PATH $HOME/.rbenv/bin $HOME/.rbenv/shims
     alias be='bundle exec'
     alias bi='bundle install'
-
-    function rbenv
-        functions -e rbenv
-        rbenv init - fish >/dev/null ^&1
-        rbenv $argv
-    end
 end
 
 ## Java

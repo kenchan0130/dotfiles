@@ -12,6 +12,9 @@ if test -d $HOME/.tools/osx
     set -xg PATH $PATH $HOME/.tools/osx
 end
 
+# Android
+set -xg PATH $PATH $HOME/Library/Android/sdk/platform-tools
+
 # TODO: 動かす
 # 画像を表示する君
 # if begin; type convert >/dev/null 2>&1; and test -d /Applications/iTerm.app; end
@@ -44,6 +47,3 @@ end
 #     bind $argv \n background-image
 # end
 #
-
-# Android
-set -xg PATH $PATH $HOME/Library/Android/sdk/platform-tools
