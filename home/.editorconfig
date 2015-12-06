@@ -1,0 +1,7 @@
+root = true
+
+[*]
+# 行末の余計なスペースを削除
+trim_trailing_whitespace = true
+# 最終行に空の行を追加
+insert_final_newline = true

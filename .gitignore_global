@@ -1,9 +1,0 @@
-*~
-.DS_Store
-.idea/
-.envrc
-.local.vimrc
-
-vendor/bundle/
-
-node_modules/

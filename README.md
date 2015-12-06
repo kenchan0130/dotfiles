@@ -1,5 +1,2 @@
 # dotfiles
 
-```sh
-./setup.sh
-```
