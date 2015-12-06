@@ -1,5 +1,6 @@
 fundle plugin 'edc/bass'
+fundle plugin 'greggles/fishy-drupal'
 
 fundle init
 
-bass source $HOME/.config/settings/custom.fish
+source $HOME/.config/fish/settings/custom.fish
