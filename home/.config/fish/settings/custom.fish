@@ -90,17 +90,6 @@ if type direnv >/dev/null 2>&1
     eval (direnv hook fish)
 end
 
-## The fuck
-if type thefuck >/dev/null 2>&1
-    function fuck
-        thefuck (fc -ln -1)
-    end
-    function FUCK
-        fuck
-    end
-end
-
-
 switch (uname)
     ## Mac
     case Darwin
@@ -147,7 +136,6 @@ alias ggr='git grep'
 alias grm='git rm'
 alias gst='git status'
 alias gre='git reset --merge'
-
 
 ## local
 if test -f $HOME/.local.fish
