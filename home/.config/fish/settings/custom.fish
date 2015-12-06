@@ -150,6 +150,7 @@ alias gfc='git fetch'
 alias gg='git grep'
 alias ggr='git grep'
 alias grm='git rm'
+alias gst='git status'
 alias gre='git reset --merge'
 
 
