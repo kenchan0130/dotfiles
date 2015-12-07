@@ -58,6 +58,12 @@ NeoBundle 'tpope/vim-surround'
 NeoBundle 'fatih/vim-go'
 
 
+" airblade/vim-gitgutter
+" ------------------------------------
+" for fish-shell
+" see also: https://github.com/airblade/vim-gitgutter#installation
+set shell=/bin/bash
+
 " vim-operator-surround
 " ------------------------------------
 nmap <silent>sa <Plug>(operator-surround-append)
