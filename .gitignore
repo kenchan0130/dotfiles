@@ -1,5 +1,6 @@
 home/.config/fish/fish_history
 home/.config/fish/fishd*
+home/.config/fish/fundle/
 .DS_Store
 .AppleDouble
 .LSOverride
