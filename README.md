@@ -1,6 +1,6 @@
 # dotfiles
 
-## depend on
+## dependencies
 - [homesick](https://github.com/technicalpickles/homesick)
 - [fish-shell](http://fishshell.com/)
     - [fundle](https://github.com/tuvistavie/fundle)
