@@ -1,3 +1,11 @@
+set -xg EDITOR (which vim)
+set -xg FISH_ROOT $HOME/.config/fish
+set -xg PATH $PATH /usr/local/bin /usr/bin /bin /usr/sbin /sbin
+set -xg PATH $PATH $HOME/tools
+
+## custom functions
+source $FISH_ROOT/settings/peco_select_history.fish
+
 function recho
     echo -e "\e[31m$argv\e[m";
 end
@@ -40,12 +48,9 @@ function csv-viewer
     echo $v | sed 's/,,/, ,/g;s/,,/, ,/g' | column -s, -t
 end
 
-set -x EDITOR (which vim)
-
-set -xg PATH $PATH /usr/local/bin /usr/bin /bin /usr/sbin /sbin
-set -xg PATH $PATH $HOME/tools
-set -xg FISH_ROOT $HOME/.config/fish
-
+function relogin
+    eval $SHELL -l
+end
 
 ## Perl
 if test -d $HOME/perl5
@@ -108,7 +113,6 @@ end
 alias ks='ls'
 alias grep='grep --color=always'
 alias df='df -h'
-alias relogin='$SHELL -l'
 # rails
 alias RET='RAILS_ENV=test'
 alias RED='RAILS_ENV=development'
@@ -141,3 +145,9 @@ alias gre='git reset --merge'
 if test -f $HOME/.local.fish
     source $HOME/.local.fish
 end
+
+## triggered by key binding
+function fish_user_key_bindings
+    bind \cr 'peco_select_history'
+end
+

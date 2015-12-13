@@ -26,7 +26,7 @@ if begin; type convert >/dev/null 2>&1; and test -d /Applications/iTerm.app; end
             set image_list $image_list $file_path
         end
     end
-    function background-image
+    function background_image
         set -l width (math (tput lines)\*10)
         set -l height (math (tput cols)\*5)
         if test -z "$BUFFER"
@@ -44,6 +44,9 @@ if begin; type convert >/dev/null 2>&1; and test -d /Applications/iTerm.app; end
             end tell"
         end
     end
-    # TODO: 空の Enter 押したら動かす
+
+    # function fish_user_key_bindings
+    #     bind enter background_images
+    # end
 end
 
