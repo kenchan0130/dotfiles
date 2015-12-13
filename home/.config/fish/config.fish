@@ -1,5 +1,5 @@
 fundle plugin 'edc/bass'
-fundle plugin 'greggles/fishy-drupal'
+fundle plugin 'kenchan0130/theme-default'
 
 fundle init
 
