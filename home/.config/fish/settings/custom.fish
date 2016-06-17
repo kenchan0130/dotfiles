@@ -1,10 +1,8 @@
 set -xg EDITOR (which vim)
 set -xg FISH_ROOT $HOME/.config/fish
 set -xg PATH $PATH /usr/local/bin /usr/bin /bin /usr/sbin /sbin
-set -xg PATH $PATH $HOME/tools
 
 ## custom functions
-source $FISH_ROOT/settings/peco_select_history.fish
 
 function recho
     echo -e "\e[31m$argv\e[m";
@@ -80,7 +78,7 @@ end
 ## Ruby
 if test -d $HOME/.rbenv
     rbenv init - | source
-    set -xg PATH $PATH $HOME/.rbenv/bin $HOME/.rbenv/shims
+    set -xg PATH $PATH $HOME/.rbenv/shims
     alias be='bundle exec'
     alias bi='bundle install'
 end
