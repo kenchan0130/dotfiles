@@ -43,7 +43,6 @@ NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'OrangeT/vim-csharp'
 NeoBundle '5t111111/neat-json.vim'
 NeoBundle 'Chiel92/vim-autoformat'
-NeoBundle 'mxw/vim-jsx'
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'tpope/vim-endwise'
 NeoBundle 'vim-scripts/AnsiEsc.vim'
@@ -56,7 +55,10 @@ NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'Glench/Vim-Jinja2-Syntax'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'fatih/vim-go'
-
+NeoBundle 'IN3D/vim-raml'
+NeoBundle 'ekalinin/Dockerfile.vim'
+NeoBundle 'mxw/vim-jsx', {'depends': ['pangloss/vim-javascript']}
+NeoBundle 'matchit.zip'
 
 " airblade/vim-gitgutter
 " ------------------------------------
@@ -229,6 +231,9 @@ autocmd BufNewFile,BufRead *.coffee set nowrap tabstop=2 shiftwidth=2 softtabsto
 
 " HTML
 autocmd BufNewFile,BufRead *.html set nowrap tabstop=2 shiftwidth=2 softtabstop=2
+
+" JavaScript
+autocmd BufNewFile,BufRead *.js set nowrap tabstop=2 shiftwidth=2 softtabstop=2
 
 " SCSS/SASS
 autocmd BufNewFile,BufRead *.scss set nowrap tabstop=2 shiftwidth=2 softtabstop=2
