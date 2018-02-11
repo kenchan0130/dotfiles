@@ -67,6 +67,7 @@ end
 ## Go
 if type go >/dev/null 2>&1
     set -xg GOPATH $HOME/.go
+    set -xg GOBIN $GOPATH/bin
     set -xg PATH $PATH $GOPATH/bin
 end
 
