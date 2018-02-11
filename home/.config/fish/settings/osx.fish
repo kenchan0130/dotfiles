@@ -4,9 +4,11 @@ alias orgrm='/bin/rm'
 alias sed='gsed'
 alias readlink='greadlink'
 alias awk='gawk'
+ alias awk='gawk'
 alias date='gdate'
 alias grep='ggrep'
 alias tar='gtar'
+ alias sha256sum='gsha256sum'
 
 if test -d $HOME/.tools/osx
     set -xg PATH $PATH $HOME/.tools/osx
