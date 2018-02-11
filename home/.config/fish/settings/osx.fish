@@ -4,18 +4,19 @@ alias orgrm='/bin/rm'
 alias sed='gsed'
 alias readlink='greadlink'
 alias awk='gawk'
- alias awk='gawk'
 alias date='gdate'
 alias grep='ggrep'
 alias tar='gtar'
- alias sha256sum='gsha256sum'
+alias sha256sum='gsha256sum'
 
 if test -d $HOME/.tools/osx
     set -xg PATH $PATH $HOME/.tools/osx
 end
 
 # Android
-set -xg PATH $PATH $HOME/Library/Android/sdk/platform-tools
+if test -d $HOME/Library/Android/sdk/platform-tools
+    set -xg PATH $PATH $HOME/Library/Android/sdk/platform-tools
+end
 
 # 画像を表示する君
 if begin; type convert >/dev/null 2>&1; and test -d /Applications/iTerm.app; end
