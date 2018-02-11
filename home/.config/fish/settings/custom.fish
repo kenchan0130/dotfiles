@@ -2,6 +2,11 @@ set -xg EDITOR (which vim)
 set -xg FISH_ROOT $HOME/.config/fish
 set -xg PATH $PATH /usr/local/bin /usr/bin /bin /usr/sbin /sbin
 
+## local
+if test -f $HOME/.local.fish
+    source $HOME/.local.fish
+end
+
 ## custom functions
 
 function recho
@@ -139,7 +144,7 @@ alias grm='git rm'
 alias gst='git status'
 alias gre='git reset --merge'
 
-## local
+## 2 times because 2 times because local priority is high
 if test -f $HOME/.local.fish
     source $HOME/.local.fish
 end
