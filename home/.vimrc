@@ -219,7 +219,7 @@ autocmd BufEnter * if (expand("%") =~ "_spec\.rb$") || (expand("%") =~ "^spec.*\
 autocmd BufNewFile,BufRead *.rb  set nowrap tabstop=2 shiftwidth=2 softtabstop=2
 autocmd BufNewFile,BufRead *.erb set nowrap tabstop=2 shiftwidth=2 softtabstop=2
 autocmd BufNewFile,BufRead *.thor set nowrap tabstop=2 shiftwidth=2 softtabstop=2 filetype=ruby
-autocmd BufNewFile,BufRead *file set nowrap tabstop=2 shiftwidth=2 softtabstop=2 filetype=ruby
+autocmd BufNewFile,BufRead *file,!Dockerfile set nowrap tabstop=2 shiftwidth=2 softtabstop=2 filetype=ruby
 autocmd BufNewFile,BufRead Movefile set nowrap tabstop=2 shiftwidth=2 softtabstop=2 filetype=yaml
 
 " YAML
