@@ -1,7 +1,7 @@
-set __fundle_current_version '0.5.1'
+set __fundle_current_version '0.6.2'
 
 function __fundle_seq -a upto
-	seq 1 1 $upto ^ /dev/null
+	seq 1 1 $upto 2>/dev/null
 end
 
 function __fundle_next_arg -a index
@@ -24,9 +24,9 @@ function __fundle_compare_versions -a version1 -a version2
 	for i in (__fundle_seq 4)
 		set -l v1 (echo $version1 | cut -d '.' -f $i | sed -Ee 's/[a-z]+//g')
 		set -l v2 (echo $version2 | cut -d '.' -f $i | sed -Ee 's/[a-z]+//g')
-		if test $v1 -lt $v2 -o \( -n $v1 -a -z $v2 \)
+		if test \( -n $v1 -a -z $v2 \) -o \( -n $v1 -a -n $v2 -a $v1 -lt $v2 \)
 			echo -n "lt"; and return 0
-		else if test $v1 -gt $v2 -o \( -z $v1 -a -n $v2 \)
+		else if test \( -z $v1 -a -n $v2 \) -o \( -n $v1 -a -n $v2 -a $v1 -gt $v2 \)
 			echo -n "gt"; and return 0
 		end
 	end
@@ -50,7 +50,7 @@ end
 
 function __fundle_date -d "returns a date"
 	set -l d (date +%s%N)
-	if echo $d | grep -v 'N' > /dev/null ^&1
+	if echo $d | grep -v 'N' > /dev/null 2>&1
 		echo $d
 	else
 		gdate +%s%N
@@ -60,7 +60,7 @@ end
 
 function __fundle_self_update -d "updates fundle"
 	set -l fundle_repo_url "https://github.com/tuvistavie/fundle.git"
-	set -l latest (git ls-remote --tags $fundle_repo_url | sed -n -e 's|.*refs/tags/v\(.*\)|\1|p' | tail -n 1)
+	set -l latest (command git ls-remote --tags $fundle_repo_url | sed -n -e 's|.*refs/tags/v\(.*\)|\1|p' | tail -n 1)
 	if test (__fundle_compare_versions $latest (__fundle_version)) != "gt"
 		echo "fundle is already up to date"; and return 0
 	else
@@ -86,7 +86,7 @@ function __fundle_remote_url -d "prints the remote url from the full git url" -a
 end
 
 function __fundle_rev_parse -d "prints the revision if any" -a dir -a commitish
-	set -l sha (git --git-dir $dir rev-parse -q --verify $commitish ^ /dev/null)
+	set -l sha (command git --git-dir $dir rev-parse -q --verify $commitish 2>/dev/null)
 	if test $status -eq 0
 		echo -n $sha
 		return 0
@@ -106,14 +106,18 @@ end
 
 function __fundle_plugins_dir -d "returns fundle directory"
 	if test -z "$fundle_plugins_dir"
-		echo $HOME/.config/fish/fundle
+		if test -n "$XDG_CONFIG_HOME"
+			echo $XDG_CONFIG_HOME/fish/fundle
+		else
+			echo $HOME/.config/fish/fundle
+		end
 	else
 		echo $fundle_plugins_dir
 	end
 end
 
 function __fundle_no_git -d "check if git is installed"
-	if not which git > /dev/null ^&1
+	if not which git > /dev/null 2>&1
 		echo "git needs to be installed and in the path"
 		return 0
 	end
@@ -121,10 +125,10 @@ function __fundle_no_git -d "check if git is installed"
 end
 
 function __fundle_check_date -d "check date"
-	if date +%s%N | grep -v 'N' > /dev/null ^&1
+	if date +%s%N | grep -v 'N' > /dev/null 2>&1
 		return 0
 	end
-	if which gdate > /dev/null ^&1
+	if which gdate > /dev/null 2>&1
 		return 0
 	end
 	echo "You need to have a GNU date compliant date installed to use profiling. Use 'brew install coreutils' on OSX"
@@ -136,8 +140,8 @@ function __fundle_get_url -d "returns the url for the given plugin" -a repo
 end
 
 function __fundle_update_plugin -d "update the given plugin" -a git_dir -a remote_url
-	git --git-dir=$git_dir remote set-url origin $remote_url ^ /dev/null; and \
-	git --git-dir=$git_dir fetch -q ^ /dev/null
+	command git --git-dir=$git_dir remote set-url origin $remote_url 2>/dev/null; and \
+	command git --git-dir=$git_dir fetch -q 2>/dev/null
 end
 
 function __fundle_install_plugin -d "install/update the given plugin" -a plugin -a git_url
@@ -164,12 +168,12 @@ function __fundle_install_plugin -d "install/update the given plugin" -a plugin 
 		end
 	else
 		echo "Installing $plugin"
-		git clone -q $remote_url $plugin_dir
+		command git clone -q $remote_url $plugin_dir
 	end
 
 	set -l sha (__fundle_commit_sha $git_dir (__fundle_url_rev $git_url))
 	if test $status -eq 0
-		git --git-dir="$git_dir" --work-tree="$plugin_dir" checkout -q -f $sha
+		command git --git-dir="$git_dir" --work-tree="$plugin_dir" checkout -q -f $sha
 	else
 		echo "Could not update $plugin"
 		return 1
@@ -197,6 +201,8 @@ function __fundle_load_plugin -a plugin -a path -a fundle_dir -a profile -d "loa
 
 	set -l plugin_name (echo $plugin | awk -F/ '{print $NF}' | sed -e s/plugin-//)
 	set -l init_file "$plugin_dir/init.fish"
+	set -l conf_dir "$plugin_dir/conf.d"
+	set -l bindings_file  "$plugin_dir/key_bindings.fish"
 	set -l functions_dir "$plugin_dir/functions"
 	set -l completions_dir  "$plugin_dir/completions"
 	set -l plugin_paths $__fundle_plugin_name_paths
@@ -211,11 +217,20 @@ function __fundle_load_plugin -a plugin -a path -a fundle_dir -a profile -d "loa
 
 	if test -f $init_file
 		source $init_file
+	else if test -d $conf_dir
+		# read all *.fish files in conf.d
+		for f in (find $conf_dir -maxdepth 1 -iname "*.fish")
+			source $f
+		end
 	else
-		# read all *.fish files if no init.fish found
+		# read all *.fish files if no init.fish or conf.d found
 		for f in (find $plugin_dir -maxdepth 1 -iname "*.fish")
 			source $f
 		end
+	end
+
+	if test -f $bindings_file
+		set -g __fundle_binding_paths $bindings_file $__fundle_binding_paths
 	end
 
 	set -g __fundle_loaded_plugins $plugin $__fundle_loaded_plugins
@@ -227,6 +242,21 @@ function __fundle_load_plugin -a plugin -a path -a fundle_dir -a profile -d "loa
 	end
 
 	emit "init_$plugin_name" $plugin_dir
+end
+
+function __fundle_bind -d "set up bindings"
+	if functions -q fish_user_key_bindings; and not functions -q __fish_user_key_bindings
+		functions -c fish_user_key_bindings __fish_user_key_bindings
+	end
+
+	function fish_user_key_bindings
+		for bindings in $__fundle_binding_paths
+			source $bindings
+		end
+		if functions -q __fish_user_key_bindings
+			__fish_user_key_bindings
+		end
+	end
 end
 
 function __fundle_init -d "initialize fundle"
@@ -248,6 +278,8 @@ Try reloading your shell if you just edited your configuration."
 		echo $name_path | sed -e 's/:/ /' | read -l -a name_path
 		__fundle_profile_or_run $profile __fundle_load_plugin $name_path[1] $name_path[2] $fundle_dir $profile
 	end
+
+	__fundle_bind
 end
 
 function __fundle_install -d "install plugin"
