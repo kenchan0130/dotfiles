@@ -154,8 +154,19 @@ if test -f $HOME/.local.fish
     source $HOME/.local.fish
 end
 
+
 ## triggered by key binding
 function fish_user_key_bindings
-    bind \cr 'peco_select_history'
+    # Set fish default mode as insert
+    fish_vi_key_bindings insert
+
+    bind \cr 'peco_select_history (commandline -b)'
+    bind -M insert \cr 'peco_select_history (commandline -b)'
+
+    if type refresh_feeling >/dev/null 2>&1
+        # This mean is Kanna bind!
+        bind \ck 'refresh_feeling'
+        bind -M insert \ck 'refresh_feeling'
+    end
 end
 
