@@ -9,6 +9,10 @@ end
 
 ## custom functions
 
+function setenv
+    set -gx $argv
+end
+
 function recho
     echo -e "\e[31m$argv\e[m";
 end
@@ -83,8 +87,8 @@ end
 
 ## Ruby
 if test -d $HOME/.rbenv
-    rbenv init - | source
     set -xg PATH $PATH $HOME/.rbenv/shims
+    rbenv init - | source
     alias be='bundle exec'
     alias bi='bundle install'
 end
