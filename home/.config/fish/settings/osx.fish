@@ -19,7 +19,7 @@ if test -d $HOME/Library/Android/sdk/platform-tools
 end
 
 # 画像を表示する君
-if begin; type convert >/dev/null 2>&1; and test -d /Applications/iTerm.app; end
+if begin; type convert >/dev/null 2>&1; and test -d /Applications/iTerm.app; or test -d $HOME/Applications/iTerm.app; end
     set display_image_path /tmp/background.png
     set image_dir $HOME/.background_images/
     set image_list ""
@@ -29,7 +29,7 @@ if begin; type convert >/dev/null 2>&1; and test -d /Applications/iTerm.app; end
             set image_list $image_list $file_path
         end
     end
-    function background_image
+    function refresh_feeling
         set -l width (math (tput lines)\*10)
         set -l height (math (tput cols)\*5)
         if test -z "$BUFFER"
@@ -47,9 +47,7 @@ if begin; type convert >/dev/null 2>&1; and test -d /Applications/iTerm.app; end
             end tell"
         end
     end
-
-    # function fish_user_key_bindings
-    #     bind enter background_images
-    # end
+else
+   echo "Refresh feeling is not active. Please install convert command or iTerm.app." >&2
 end
 
