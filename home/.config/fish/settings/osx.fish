@@ -23,10 +23,10 @@ if begin; type convert >/dev/null 2>&1; and test -d /Applications/iTerm.app; or 
     set display_image_path /tmp/background.png
     set image_dir $HOME/.background_images/
     set image_list ""
-    for image_file in (ls -F $image_dir | grep -v /)
-        set -l file_path $image_dir$image_file
-        if test -f $file_path
-            set image_list $image_list $file_path
+    for image_file_name in (ls -F "$image_dir" | grep -v / | sed 's/@$//')
+        set -l image_file_path "$image_dir$image_file_name"
+        if test -f $image_file_path
+            set image_list $image_list $image_file_path
         end
     end
     function refresh_feeling
