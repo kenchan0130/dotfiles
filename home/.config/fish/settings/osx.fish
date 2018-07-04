@@ -20,7 +20,6 @@ end
 
 # 画像を表示する君
 if begin; type convert >/dev/null 2>&1; and test -d /Applications/iTerm.app; or test -d $HOME/Applications/iTerm.app; end
-    set display_image_path /tmp/background.png
     set image_dir $HOME/.background_images/
     set image_list ""
     for image_file_name in (ls -F "$image_dir" | grep -v / | sed 's/@$//')
@@ -30,9 +29,10 @@ if begin; type convert >/dev/null 2>&1; and test -d /Applications/iTerm.app; or 
         end
     end
     function refresh_feeling
-        set -l width (math (tput lines)\*10)
-        set -l height (math (tput cols)\*5)
         if test -z "$BUFFER"
+            set display_image_path /tmp/background_(/usr/bin/uuidgen)_(/bin/date +%s).png
+            set -l width (math (tput lines)\*10)
+            set -l height (math (tput cols)\*5)
             set image_index (math (math (random)%(count $image_list)+1))
             set image_path $image_list[$image_index]
             convert $image_path -resize "$height"x"$width" -size "$height"x"$width" xc:"#353535" +swap -gravity center -composite $display_image_path
@@ -45,6 +45,9 @@ if begin; type convert >/dev/null 2>&1; and test -d /Applications/iTerm.app; or 
             end tell
             end tell
             end tell"
+            /bin/rm $display_image_path
+        else
+            echo "You have no buffer."
         end
     end
 else
