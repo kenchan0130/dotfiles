@@ -86,14 +86,22 @@ if test -d $HOME/.nodebrew
 end
 
 ## Ruby
-if test -d $HOME/.rbenv
+if type rbenv >/dev/null 2>&1
     set -xg PATH $PATH $HOME/.rbenv/shims
     rbenv init - | source
     alias be='bundle exec'
     alias bi='bundle install'
 end
 
-## Java
+## Python
+if type pyenv >/dev/null 2>&1
+    mkdir -p $HOME/.pyenv/bin
+    set -xg PYENV_ROOT $HOME/.pyenv
+    set -xg PATH $PATH $PYENV_ROOT/bin
+    eval (pyenv init - | source) >/dev/null 2>&1
+    eval (pyenv virtualenv-init - | source) >/dev/null 2>&1
+end
+
 if test -f /usr/libexec/java_home
     set -xg JAVA_HOME (/usr/libexec/java_home)
 end

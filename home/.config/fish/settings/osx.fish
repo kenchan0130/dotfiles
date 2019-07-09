@@ -1,6 +1,5 @@
 # alias
-alias rm='rmtrash'
-alias orgrm='/bin/rm'
+alias trash='rmtrash'
 alias sed='gsed'
 alias readlink='greadlink'
 alias awk='gawk'
