@@ -1,4 +1,3 @@
-set -xg EDITOR (which vim)
 set -xg FISH_ROOT $HOME/.config/fish
 set -xg PATH $PATH /usr/local/bin /usr/bin /bin /usr/sbin /sbin
 
@@ -102,9 +101,8 @@ if type pyenv >/dev/null 2>&1
     eval (pyenv virtualenv-init - | source) >/dev/null 2>&1
 end
 
-if test -f /usr/libexec/java_home
-    set -xg JAVA_HOME (/usr/libexec/java_home)
-end
+# Java
+bass "source $SDKMAN_DIR/bin/sdkman-init.sh"
 
 ## Direnv
 if type direnv >/dev/null 2>&1
@@ -161,6 +159,7 @@ if test -f $HOME/.local.fish
     source $HOME/.local.fish
 end
 
+set -xg EDITOR (which vim)
 
 ## triggered by key binding
 function fish_user_key_bindings
