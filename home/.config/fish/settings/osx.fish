@@ -7,6 +7,7 @@ alias date='gdate'
 alias grep='ggrep'
 alias tar='gtar'
 alias sha256sum='gsha256sum'
+alias vim='mvim -v'
 
 if test -d $HOME/.tools/osx
     set -xg PATH $PATH $HOME/.tools/osx
