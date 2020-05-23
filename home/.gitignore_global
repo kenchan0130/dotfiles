@@ -1,9 +1,13 @@
 *~
 .DS_Store
-.idea/
 .envrc
 .local.vimrc
 
+# JetBrains IDE
+.idea/
+
+# Ruby
 vendor/bundle/
 
-node_modules/
+# VS Code
+.history
