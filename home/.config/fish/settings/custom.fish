@@ -6,6 +6,14 @@ if test -f $HOME/.local.fish
     source $HOME/.local.fish
 end
 
+## bobthefish
+
+set -g theme_color_scheme solarized
+
+## fish-ghq
+set -g GHQ_SELECTOR peco
+set -g GHQ_SELECTOR_OPTS "--prompt='ghq>'"
+
 ## custom functions
 
 function setenv
@@ -56,6 +64,14 @@ end
 
 function relogin
     eval $SHELL -l
+end
+
+function peco-z
+    z -l 2> /dev/null | awk '{ print $2 }' | peco --layout=bottom-up --prompt='cd>' | read recent
+    if [ $recent ]
+        cd $recent
+        commandline -f repaint
+    end
 end
 
 ## Perl
@@ -168,6 +184,9 @@ function fish_user_key_bindings
 
     bind \cr 'peco_select_history (commandline -b)'
     bind -M insert \cr 'peco_select_history (commandline -b)'
+
+    bind \ch 'peco-z'
+    bind -M insert \ch 'peco-z'
 
     if type refresh_feeling >/dev/null 2>&1
         # This mean is Kanna bind!
