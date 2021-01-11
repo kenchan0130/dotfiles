@@ -16,10 +16,6 @@ set -g GHQ_SELECTOR_OPTS "--prompt='ghq>'"
 
 ## custom functions
 
-function setenv
-    set -gx $argv
-end
-
 function recho
     echo -e "\e[31m$argv\e[m";
 end
@@ -67,9 +63,18 @@ function relogin
 end
 
 function peco-z
-    z -l 2> /dev/null | awk '{ print $2 }' | peco --layout=bottom-up --prompt='cd>' | read recent
+    z -l 2> /dev/null | awk '{ print $2 }' | peco --prompt='cd>' | read recent
     if [ $recent ]
         cd $recent
+        commandline -f repaint
+    end
+end
+
+function fn
+    [ $argv ]; and set cmd "$argv"; or set cmd "cd"
+    find . -type d | grep -v .git | peco --prompt "$cmd>" | read recent
+    if [ $recent ]
+        $cmd $recent
         commandline -f repaint
     end
 end
@@ -143,12 +148,8 @@ end
 alias ks='ls'
 alias grep='grep --color=always'
 alias df='df -h'
-# rails
-alias RET='RAILS_ENV=test'
-alias RED='RAILS_ENV=development'
-alias RES='RAILS_ENV=staging'
-alias REP='RAILS_ENV=production'
-alias rcs='rails c --sandbox'
+# kubectl
+alias k='kubectl'
 # git
 alias g='git'
 alias gi='git'
@@ -168,7 +169,6 @@ alias gg='git grep'
 alias ggr='git grep'
 alias grm='git rm'
 alias gst='git status'
-alias gre='git reset --merge'
 
 ## 2 times because 2 times because local priority is high
 if test -f $HOME/.local.fish
