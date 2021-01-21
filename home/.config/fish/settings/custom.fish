@@ -70,9 +70,14 @@ function peco-z
     end
 end
 
-function fn
+function peco-find-directory
     [ $argv ]; and set cmd "$argv"; or set cmd "cd"
-    find . -type d | grep -v .git | peco --prompt "$cmd>" | read recent
+    if type fd >/dev/null 2>&1
+        fd . -t d --max-depth 4 -E .git/ -E .history/ | peco --prompt "$cmd>" | read recent
+    else
+        find . -type d -maxdepth 4 | grep -v .git | grep -v .history | peco --prompt "$cmd>" | read recent
+    end
+
     if [ $recent ]
         $cmd $recent
         commandline -f repaint
@@ -187,6 +192,9 @@ function fish_user_key_bindings
 
     bind \ch 'peco-z'
     bind -M insert \ch 'peco-z'
+
+    bind \cf 'peco-find-directory'
+    bind -M insert \cf 'peco-find-directory'
 
     if type refresh_feeling >/dev/null 2>&1
         # This mean is Kanna bind!

@@ -1,5 +1,4 @@
 # alias
-alias trash='rmtrash'
 alias sed='gsed'
 alias readlink='greadlink'
 alias awk='gawk'
