@@ -1,6 +1,7 @@
 home/.config/fish/fish_history
 home/.config/fish/fishd*
 home/.config/fish/fundle/
+home/.config/fish/functions/
 home/.config/configstore/
 home/.config/htop/
 home/.config/yarn/
