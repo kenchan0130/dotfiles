@@ -29,33 +29,45 @@ function yecho
 end
 
 function count-line
-    set -l v ""
-    if test -p /dev/stdin
-        set v (cat -)
+    set -l v
+    if [ $argv ]
+        cat "$argv" | while read line
+            set v $v $line
+        end
     else
-        set v (cat "$argv")
+        while read line
+            set v $v $line
+        end
     end
-    echo $v | wc -l | sed 's/^[\t ]*//g'
+    echo "$v" | wc -l | sed 's/^[\t ]*//g'
 end
 
 function count-word
-    set -l v ""
-    if test -p /dev/stdin
-        set v (cat -)
+    set -l v
+    if [ $argv ]
+        cat "$argv" | while read line
+            set v $v $line
+        end
     else
-        set v (cat "$argv")
+        while read line
+            set v $v $line
+        end
     end
-    echo $v | wc -w | sed 's/^[\t ]*//g'
+    echo "$v" | wc -w | sed 's/^[\t ]*//g'
 end
 
 function csv-viewer
-    set -l v ""
-    if test -p /dev/stdin
-        set v (cat -)
+    set -l v
+    if [ $argv ]
+        cat "$argv" | while read line
+            set v $v $line
+        end
     else
-        set v (cat "$argv")
+        while read line
+            set v $v $line
+        end
     end
-    echo $v | sed 's/,,/, ,/g;s/,,/, ,/g' | column -s, -t
+    echo "$v" | sed 's/,,/, ,/g;s/,,/, ,/g' | column -s, -t
 end
 
 function relogin
@@ -82,6 +94,36 @@ function peco-find-directory
         $cmd $recent
         commandline -f repaint
     end
+end
+
+function yaml2json
+    set -l v
+    if [ $argv ]
+        cat "$argv" | while read line
+            set v $v $line
+        end
+    else
+        while read line
+            set v $v $line
+        end
+    end
+
+    ruby -ryaml -rjson -e 'puts JSON.pretty_generate(YAML.load(STDIN.read))' <(printf "%s\n" $v | psub)
+end
+
+function json2yaml
+    set -l v
+    if [ $argv ]
+        cat "$argv" | while read line
+            set v $v $line
+        end
+    else
+        while read line
+            set v $v $line
+        end
+    end
+
+    ruby -ryaml -rjson -e 'puts YAML.dump(JSON.parse(STDIN.read))' <(printf "%s\n" $v | psub)
 end
 
 ## Perl
