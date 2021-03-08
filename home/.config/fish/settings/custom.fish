@@ -177,6 +177,17 @@ if type direnv >/dev/null 2>&1
     eval (direnv hook fish)
 end
 
+## kubectx
+if type kubectx >/dev/null 2>&1
+    function kubectx-switch
+        kubectx | peco --prompt='kubectx>' | read recent
+        if [ $recent ]
+            kubectx $recent
+            commandline -f repaint
+        end
+    end
+end
+
 switch (uname)
     ## Mac
     case Darwin
