@@ -28,34 +28,6 @@ function yecho
     echo -e "\e[33m$argv\e[m";
 end
 
-function count-line
-    set -l v
-    if [ $argv ]
-        cat "$argv" | while read line
-            set v $v $line
-        end
-    else
-        while read line
-            set v $v $line
-        end
-    end
-    echo "$v" | wc -l | sed 's/^[\t ]*//g'
-end
-
-function count-word
-    set -l v
-    if [ $argv ]
-        cat "$argv" | while read line
-            set v $v $line
-        end
-    else
-        while read line
-            set v $v $line
-        end
-    end
-    echo "$v" | wc -w | sed 's/^[\t ]*//g'
-end
-
 function csv-viewer
     set -l v
     if [ $argv ]
@@ -67,7 +39,21 @@ function csv-viewer
             set v $v $line
         end
     end
-    echo "$v" | sed 's/,,/, ,/g;s/,,/, ,/g' | column -s, -t
+    sed 's/,,/, ,/g;s/,,/, ,/g' <(printf "%s\n" $v | psub) | nkf -w | column -s, -t | less -#2 -N -S
+end
+
+function remove-color
+    set -l v
+    if [ $argv ]
+        cat "$argv" | while read line
+            set v $v $line
+        end
+    else
+        while read line
+            set v $v $line
+        end
+    end
+    sed -r 's/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g' <(printf "%s\n" $v | psub)
 end
 
 function relogin
@@ -85,9 +71,9 @@ end
 function peco-find-directory
     [ $argv ]; and set cmd "$argv"; or set cmd "cd"
     if type fd >/dev/null 2>&1
-        fd . -t d --max-depth 4 -E .git/ -E .history/ | peco --prompt "$cmd>" | read recent
+        fd . -t d --max-depth 4 -E .git/ -E .history/ | peco --prompt="$cmd>" | read recent
     else
-        find . -type d -maxdepth 4 | grep -v .git | grep -v .history | peco --prompt "$cmd>" | read recent
+        find . -type d -maxdepth 4 | grep -v .git | grep -v .history | peco --prompt="$cmd>" | read recent
     end
 
     if [ $recent ]
@@ -211,22 +197,17 @@ alias k='kubectl'
 # git
 alias g='git'
 alias gi='git'
-alias gcm='git commit -m'
-alias gch='git checkout'
 alias gd='git diff'
 alias gdc='git diff --cached'
-alias gps='git push'
-alias gpsh='git push'
-alias gpso='git push origin'
-alias gpl='git pull'
-alias gpll='git pull'
-alias gplo='git pull origin'
 alias gf='git fetch'
-alias gfc='git fetch'
 alias gg='git grep'
 alias ggr='git grep'
 alias grm='git rm'
 alias gst='git status'
+
+function gch
+    git branch -a --sort=-authordate | grep -v -e '->' -e '*' | perl -pe 's/^\h+//g' | perl -pe 's#^remotes/origin/###' | perl -nle 'print if !$c{$_}++' | peco --prompt='git checkout>' | xargs git checkout
+end
 
 ## 2 times because 2 times because local priority is high
 if test -f $HOME/.local.fish
