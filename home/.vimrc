@@ -1,253 +1,245 @@
-let $VIM_ROOT=$HOME.'/.vim'
-if has('vim_starting')
-  set nocompatible               " Be iMproved
+let $DEIN_INSTALL_DIRECTORY = $HOME.'/.vim/bundles'
+let $BREW_PREFIX = trim(system('brew --prefix'))
+let g:python3_host_prog = $BREW_PREFIX.'/bin/python3'
+let g:python_host_prog = '/usr/bin/python'
 
-  " Required:
-  set runtimepath+=~/.vim/bundle/neobundle.vim/
+if &compatible
+  " Be iMproved
+  set nocompatible
 endif
 
-" Required:
-call neobundle#begin(expand($VIM_ROOT.'/bundle'))
+" dein Required:
+execute 'set runtimepath+='.$DEIN_INSTALL_DIRECTORY.'/repos/github.com/Shougo/dein.vim'
 
-" Let NeoBundle manage NeoBundle
-" Required:
-NeoBundleFetch 'Shougo/neobundle.vim'
+" dein Required:
+call dein#begin(expand($DEIN_INSTALL_DIRECTORY))
 
-" My Bundles here:
-NeoBundle 'Shougo/neosnippet.vim'
-NeoBundle 'Shougo/neosnippet-snippets'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'kien/ctrlp.vim'
-NeoBundle 'flazz/vim-colorschemes'
-NeoBundle 'Shougo/neocomplcache'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'Shougo/vimfiler'
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'syui/airsave.vim'
-NeoBundle 'mattn/emmet-vim'
-NeoBundle 'cakebaker/scss-syntax.vim'
-NeoBundle 'einars/js-beautify'
-NeoBundle 'jtratner/vim-flavored-markdown'
-NeoBundle 'kannokanno/previm'
-NeoBundle 'thinca/vim-localrc'
-NeoBundle 'elzr/vim-json'
-NeoBundle 'othree/html5.vim'
-NeoBundle 'hail2u/vim-css3-syntax'
-NeoBundle 'motemen/xslate-vim'
-NeoBundle 'h1mesuke/vim-alignta'
-NeoBundle 'tomtom/tcomment_vim'
-NeoBundle 'terryma/vim-multiple-cursors'
-NeoBundle 'szw/vim-tags'
-NeoBundle 'kchmck/vim-coffee-script'
-NeoBundle 'OrangeT/vim-csharp'
-NeoBundle '5t111111/neat-json.vim'
-NeoBundle 'Chiel92/vim-autoformat'
-NeoBundle 'tpope/vim-rails'
-NeoBundle 'tpope/vim-endwise'
-NeoBundle 'vim-scripts/AnsiEsc.vim'
-NeoBundle 'bronson/vim-trailing-whitespace'
-NeoBundle 'basyura/unite-rails'
-NeoBundle 'jiangmiao/auto-pairs'
-NeoBundle 'StanAngeloff/php.vim.git'
-NeoBundle 'rhysd/vim-operator-surround', {'depends': ['kana/vim-operator-user']}
-NeoBundle 'airblade/vim-gitgutter'
-NeoBundle 'Glench/Vim-Jinja2-Syntax'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'fatih/vim-go'
-NeoBundle 'IN3D/vim-raml'
-NeoBundle 'ekalinin/Dockerfile.vim'
-NeoBundle 'mxw/vim-jsx', {'depends': ['pangloss/vim-javascript']}
-NeoBundle 'matchit.zip'
+" Let dein manage dein
+" dein Required:
+call dein#add(expand($DEIN_INSTALL_DIRECTORY.'/repos/github.com/Shougo/dein.vim'))
 
-" airblade/vim-gitgutter
-" ------------------------------------
-" for fish-shell
-" see also: https://github.com/airblade/vim-gitgutter#installation
-set shell=/bin/bash
+" dein plguins
+call dein#add('Shougo/denite.nvim')
+call dein#add('Shougo/deoplete.nvim')
+call dein#add('Shougo/defx.nvim')
+if !has('nvim')
+  call dein#add('roxma/nvim-yarp')
+  call dein#add('roxma/vim-hug-neovim-rpc')
+endif
 
-" vim-operator-surround
-" ------------------------------------
-nmap <silent>sa <Plug>(operator-surround-append)
-nmap <silent>sd <Plug>(operator-surround-delete)
-nmap <silent>sr <Plug>(operator-surround-replace)
+call dein#add('Shougo/neosnippet.vim')
+call dein#add('Shougo/neosnippet-snippets')
+call dein#add('prabirshrestha/vim-lsp')
+call dein#add('lighttiger2505/deoplete-vim-lsp')
+call dein#add('markonm/traces.vim')
+call dein#add('machakann/vim-highlightedyank')
+call dein#add('nathanaelkane/vim-indent-guides')
+call dein#add('cohama/lexima.vim')
+" replace match with 'sc' key bind
+call dein#add('tpope/vim-surround')
+" move match with '%' key bind
+call dein#add('andymass/vim-matchup')
 
-" vim-multiple-cursors
-" ------------------------------------
-let g:multi_cursor_next_key='<C-j>'
-let g:multi_cursor_prev_key='<C-k>'
-let g:multi_cursor_skip_key='<C-x>'
+" dein Required:
+call dein#end()
 
-" vim-alignta
-" ------------------------------------
-vnoremap <silent> => :Align @1 =><CR>
-vnoremap <silent> == =
+" dein Required:
+filetype plugin indent on
+syntax enable
 
-" vim-flavored-markdown
-" ------------------------------------
-autocmd BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
+" deinプラグインでインストールが必要なものがあればインストール
+if dein#check_install()
+  call dein#install()
+endif
 
-" vim-autoformat
-" See also: https://github.com/Chiel92/vim-autoformat
-" ------------------------------------
-noremap <silent> :af :<C-u>Autoformat<CR>
+" """ ============= denite key bind =================
+autocmd FileType denite call s:denite_my_settings()
+function! s:denite_my_settings() abort
+  nnoremap <silent><buffer><expr> <CR>
+  \ denite#do_map('do_action', 'vsplit')
+  nnoremap <silent><buffer><expr> <Space>
+  \ denite#do_map('do_action', 'split')
+  nnoremap <silent><buffer><expr> d
+  \ denite#do_map('do_action', 'delete')
+  nnoremap <silent><buffer><expr> p
+  \ denite#do_map('do_action', 'preview')
+  nnoremap <silent><buffer><expr> <Esc>
+  \ denite#do_map('quit')
+  nnoremap <silent><buffer><expr> q
+  \ denite#do_map('quit')
+  nnoremap <silent><buffer><expr> i
+  \ denite#do_map('open_filter_buffer')
+  nnoremap <silent><buffer><expr> a
+  \ denite#do_map('open_filter_buffer')
+endfunction
 
-" nerdtree
-" ------------------------------------
-" 隠しファイルをデフォルトで表示させる
-let NERDTreeShowHidden  = 1
-nnoremap <silent> :nt :NERDTreeToggle<CR>
-" 他のバッファをすべて閉じた時にNERDTreeが開いていたらNERDTreeも一緒に閉じる
-autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-" 無視するファイルを設定する
-let g:NERDTreeIgnore = ['\.clean$', '\.swp$', '\.bak$', '\~$']
-" 引数があれば非表示
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-" マウスサポート
-let g:NERDTreeMouseMode=3
+" """ ============= defx.nvim key bind =================
+autocmd FileType defx call s:defx_my_settings()
+function! s:defx_my_settings() abort
+  nnoremap <silent><buffer><expr> <CR>
+  \ defx#do_action('drop')
+  nnoremap <silent><buffer><expr> c
+  \ defx#do_action('copy')
+  nnoremap <silent><buffer><expr> m
+  \ defx#do_action('move')
+  nnoremap <silent><buffer><expr> p
+  \ defx#do_action('paste')
+  nnoremap <silent><buffer><expr> l
+  \ defx#do_action('drop')
+  nnoremap <silent><buffer><expr> T
+  \ defx#do_action('open','tabnew')
+  nnoremap <silent><buffer><expr> E
+  \ defx#do_action('drop', 'vsplit')
+  nnoremap <silent><buffer><expr> P
+  \ defx#do_action('drop', 'pedit')
+  nnoremap <silent><buffer><expr> o
+  \ defx#do_action('open_or_close_tree')
+  nnoremap <silent><buffer><expr> K
+  \ defx#do_action('new_directory')
+  nnoremap <silent><buffer><expr> N
+  \ defx#do_action('new_file')
+  nnoremap <silent><buffer><expr> M
+  \ defx#do_action('new_multiple_files')
+  nnoremap <silent><buffer><expr> C
+  \ defx#do_action('toggle_columns',
+  \                'mark:indent:icon:filename:type:size:time')
+  nnoremap <silent><buffer><expr> S
+  \ defx#do_action('toggle_sort', 'time')
+  nnoremap <silent><buffer><expr> d
+  \ defx#do_action('remove')
+  nnoremap <silent><buffer><expr> r
+  \ defx#do_action('rename')
+  nnoremap <silent><buffer><expr> !
+  \ defx#do_action('execute_command')
+  nnoremap <silent><buffer><expr> x
+  \ defx#do_action('execute_system')
+  nnoremap <silent><buffer><expr> yy
+  \ defx#do_action('yank_path')
+  nnoremap <silent><buffer><expr> .
+  \ defx#do_action('toggle_ignored_files')
+  nnoremap <silent><buffer><expr> ;
+  \ defx#do_action('repeat')
+  nnoremap <silent><buffer><expr> h
+  \ defx#do_action('cd', ['..'])
+  nnoremap <silent><buffer><expr> ~
+  \ defx#do_action('cd')
+  nnoremap <silent><buffer><expr> q
+  \ defx#do_action('quit')
+  nnoremap <silent><buffer><expr> t
+  \ defx#do_action('open_tree', 'recursive:1')
+  nnoremap <silent><buffer><expr> *
+  \ defx#do_action('toggle_select_all')
+  nnoremap <silent><buffer><expr> j
+  \ line('.') == line('$') ? 'gg' : 'j'
+  nnoremap <silent><buffer><expr> k
+  \ line('.') == 1 ? 'G' : 'k'
+  nnoremap <silent><buffer><expr> <C-l>
+  \ defx#do_action('redraw')
+  nnoremap <silent><buffer><expr> <C-g>
+  \ defx#do_action('print')
+  nnoremap <silent><buffer><expr> cd
+  \ defx#do_action('change_vim_cwd')
+endfunction
 
-" vim-json
-" ------------------------------------
-let g:vim_json_syntax_conceal = 0
+" defx settings
+autocmd VimEnter * execute 'Defx'
+nnoremap <silent> <Leader>f :<C-u> Defx <CR>
 
-" airsave
-" ------------------------------------
-let g:auto_write = 1
+call defx#custom#option('_', {
+  \ 'winwidth': 40,
+  \ 'split': 'vertical',
+  \ 'direction': 'topleft',
+  \ 'show_ignored_files': 1,
+  \ 'buffer_name': 'exproler',
+  \ 'toggle': 1,
+  \ 'resume': 1,
+  \ })
+autocmd BufWritePost * call defx#redraw()
+autocmd BufEnter * call defx#redraw()
 
-" unite
-" ------------------------------------
-nnoremap <silent> :uf :<C-u>Unite -buffer-name=files file file/new<CR>
-nnoremap <silent> :ub :<C-u>Unite buffer<CR>
-nnoremap <silent> :ua :<C-u>Unite -buffer-name=files buffer file_mru bookmark file<CR>
-nnoremap <silent> :us :<C-u>Unite snippet<CR>
-nnoremap <silent> <Space>r :<C-u>QuickRun -outputter/buffer/split ":botright"<CR>
+" deoplete settings
+call deoplete#enable()
+call deoplete#custom#option('ignore_case', v:true)
+call deoplete#custom#option('smart_case', v:true)
 
-" neocomplcache setting
-"----------------------------------------
-let g:neocomplcache_enable_at_startup = 1
-let g:neocomplcache_auto_completion_start_length = 3
-let g:neocomplcache_min_keyword_length = 4
-let g:neocomplcache_min_syntax_length  = 3
-let g:neocomplcache_enable_ignore_case = 0
-let g:neocomplcache_enable_auto_select = 1
-let g:neocomplcache_enable_camel_case_completion = 0
-let g:neocomplcache_snippets_dir    = $VIM_ROOT.'/snippets'
-let g:neosnippet#snippets_directory = $VIM_ROOT.'/snippets'
-let g:neocomplcache_skip_auto_completion_time = '0.3'
-let g:neocomplcache_dictionary_filetype_lists = {
-    \ 'default'    : '',
-    \ 'perl'       : $VIM_ROOT.'/dict/perl.dict'
-    \ }
-imap <expr><C-k> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : "\<C-n>"
-smap <C-k> <Plug>(neocomplcache_snippets_expand)
+"" deoplete shortcut keys
+""" <TAB>: completion.
+inoremap <silent><expr> <TAB>
+          \ pumvisible() ? "\<C-n>" :
+          \ <SID>check_back_space() ? "\<TAB>" :
+          \ deoplete#manual_complete()
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+""" <S-TAB>: completion back.
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+""" <C-e>: popup cancel
+inoremap <expr><C-e> deoplete#cancel_popup()
+
+" denite settings
+"" custom variables
+if executable('rg')
+  call denite#custom#var('file/rec', 'command', ['rg', '--files', '--glob', '!.git', '--color', 'never'])
+  call denite#custom#var('file_rec', 'command', ['rg', '--files', '--glob', '!.git', '--color', 'never'])
+  call denite#custom#var('grep', 'command', ['rg', '--threads', '1'])
+  call denite#custom#var('grep', 'recursive_opts', [])
+  call denite#custom#var('grep', 'final_opts', [])
+  call denite#custom#var('grep', 'separator', ['--'])
+  call denite#custom#var('grep', 'default_opts', ['--vimgrep', '--no-heading'])
+endif
+
+"" denite shortcut keys
+nmap <Space> [denite]
+nmap <Space>p [deniteProject]
+nmap <silent> [denite]b :<C-u>Denite buffer<CR>
+nmap <silent> [denite]g :<C-u>Denite grep<CR>
+nmap <silent> [denite]m :<C-u>Denite file_mru<CR> <silent> <C-u><C-y> :<C-u>Denite neoyank<CR>
+nmap <silent> [denite]f :<C-u>Denite file/rec<CR>
+nmap <silent> [denite]d :<C-u>Denite directory_rec<CR>
+
+nmap <silent> [deniteProject]b :<C-u>DeniteProject buffer<CR>
+nmap <silent> [deniteProject]g :<C-u>DeniteProject grep<CR>
+nmap <silent> [deniteProject]m :<C-u>DeniteProject file_mru<CR> <silent> <C-u><C-y> :<C-u>Denite neoyank<CR>
+nmap <silent> [deniteProject]f :<C-u>DeniteProject file/rec<CR>
+nmap <silent> [deniteProject]d :<C-u>DeniteProject directory_rec<CR>
+
+call denite#custom#option('default', 'prompt', '>')
+call denite#custom#map('insert', '<Tab>', '<denite:move_to_next_line>')
+call denite#custom#map('insert', '<S-Tab>', '<denite:move_to_previous_line>')
 
 
-" syntastic setting
-"----------------------------------------
-let g:syntastic_mode_map = {
-  \ 'mode': 'active',
-  \ 'active_filetypes': ['ruby', 'perl'],
-  \ 'passive_filetypes': ['html']
-  \}
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_enable_signs = 1
-let g:syntastic_enable_perl_checker = 1
-let g:syntastic_perl_checkers = ['perl']
-let g:syntastic_coffee_checkers = ['coffeelint', 'coffee']
-let g:syntastic_ruby_checkers = ['mri', 'rubocop']
-let g:syntastic_ruby_rubocop_exec = $HOME.'/.rbenv/shims/rubocop'
+" neosnippet
+imap <C-s>     <Plug>(neosnippet_expand_or_jump)
+smap <C-s>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-s>     <Plug>(neosnippet_expand_target)
 
-" neosnippet setting
-"----------------------------------------
-nnoremap <silent> :ns :NeoSnippetEdit<CR>
-
-let g:neosnippet#enable_snipmate_compatibility = 1
-imap <C-i> <Plug>(neosnippet_expand_or_jump)
-smap <C-i> <Plug>(neosnippet_expand_or_jump)
-xmap <C-i> <Plug>(neosnippet_expand_target)
-imap <expr><TAB> neosnippet#expandable() <Bar><Bar> neosnippet#jumpable() ?
-			\"\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable() <Bar><Bar> neosnippet#jumpable() ?
-			\"\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 if has('conceal')
-	set conceallevel=2 concealcursor=i
+  set conceallevel=2 concealcursor=niv
 endif
+"" disable neosnippeet preview
+set completeopt-=preview
 
+" vim-highlightedyank settings
+let g:highlightedyank_highlight_duration = 100
 
-" emmet
-" ------------------------------------
-let g:user_emmet_expandabbr_key = '<C-e>'
+" vim-indent-guides settings
+let g:indent_guides_auto_colors=0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd   ctermbg=234
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven  ctermbg=238
+let g:indent_guides_enable_on_vim_startup=1
+let g:indent_guides_start_level=2
+let g:indent_guides_guide_size=1
 
-let g:user_emmet_settings = {
-			\'indentation' : '  ',
-			\'lang' : 'ja'
-			\}
+" ============= denite.nvim end =================
 
-" You can specify revision/branch/tag.
-NeoBundle 'Shougo/vimshell', { 'rev' : '3787e5' }
-
-call neobundle#end()
-
-" Required:
-filetype plugin indent on
-
-" If there are uninstalled bundles found on startup,
-" this will conveniently prompt you to install them.
-NeoBundleCheck
-
-
-
-" Perl用設定
-autocmd BufNewFile,BufRead *.psgi set filetype=perl
-autocmd BufNewFile,BufRead *.t    set filetype=perl
-" SuperTab like snippets behavior.
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: "\<TAB>"
-
-
-" Rails
-autocmd BufEnter * if exists("b:rails_root") | NeoComplCacheSetFileType ruby.rails | endif
-autocmd BufEnter * if (expand("%") =~ "_spec\.rb$") || (expand("%") =~ "^spec.*\.rb$") | NeoComplCacheSetFileType ruby.rspec | endif
-
-" Ruby
-autocmd BufNewFile,BufRead *.rb  set nowrap tabstop=2 shiftwidth=2 softtabstop=2
-autocmd BufNewFile,BufRead *.erb set nowrap tabstop=2 shiftwidth=2 softtabstop=2
-autocmd BufNewFile,BufRead *.thor set nowrap tabstop=2 shiftwidth=2 softtabstop=2 filetype=ruby
-autocmd BufNewFile,BufRead *file,!Dockerfile set nowrap tabstop=2 shiftwidth=2 softtabstop=2 filetype=ruby
-autocmd BufNewFile,BufRead Movefile set nowrap tabstop=2 shiftwidth=2 softtabstop=2 filetype=yaml
-
-" YAML
-autocmd BufNewFile,BufRead *.yml set nowrap tabstop=2 shiftwidth=2 softtabstop=2
-autocmd BufNewFile,BufRead *.yaml set nowrap tabstop=2 shiftwidth=2 softtabstop=2
-
-" CoffeeScript
-autocmd BufNewFile,BufRead *.coffee set nowrap tabstop=2 shiftwidth=2 softtabstop=2
-
-" HTML
-autocmd BufNewFile,BufRead *.html set nowrap tabstop=2 shiftwidth=2 softtabstop=2
-
-" JavaScript
-autocmd BufNewFile,BufRead *.js set nowrap tabstop=2 shiftwidth=2 softtabstop=2
-
-" SCSS/SASS
-autocmd BufNewFile,BufRead *.scss set nowrap tabstop=2 shiftwidth=2 softtabstop=2
-autocmd BufNewFile,BufRead *.sass set nowrap tabstop=2 shiftwidth=2 softtabstop=2
-
-" PHP
-autocmd BufNewFile,BufRead *.php set nowrap noexpandtab tabstop=2 shiftwidth=2 softtabstop=2
-
+set wildmenu
 
 " マウス操作を許可
 set mouse=a
-
-" tagsの設定
-set tags=.tags
 
 " 行番号の表示
 set nu
@@ -331,12 +323,6 @@ set scrolloff=5
 " .swapファイルを作らない
 set noswapfile
 
-" insertモードから抜ける
-inoremap <silent> jj <ESC>
-inoremap <silent> <C-j> j
-inoremap <silent> kk <ESC>
-inoremap <silent> <C-k> k
-
 " 行頭・行末移動方向をキーの相対位置にあわせる
 nnoremap 0 $
 nnoremap 1 0
@@ -347,15 +333,29 @@ inoremap <C-k> <Up>
 inoremap <C-h> <Left>
 inoremap <C-l> <Right>
 
-" カーソル前の文字削除
-" inoremap <silent> <C-h> <C-g>u<C-h>
-" カーソル後の文字削除
-inoremap <silent> <C-d> <Del>
-" カーソルから行頭まで削除
-inoremap <silent> <C-d>e <Esc>lc^
-" カーソルから行末まで削除
-inoremap <silent> <C-d>0 <Esc>lc$
-" カーソルから行頭までヤンク
-inoremap <silent> <C-y>e <Esc>ly0<Insert>
-" カーソルから行末までヤンク
-inoremap <silent> <C-y>0 <Esc>ly$<Insert>
+" Ruby
+autocmd BufNewFile,BufRead *.rb  set nowrap tabstop=2 shiftwidth=2 softtabstop=2
+autocmd BufNewFile,BufRead *.erb set nowrap tabstop=2 shiftwidth=2 softtabstop=2
+autocmd BufNewFile,BufRead *.thor set nowrap tabstop=2 shiftwidth=2 softtabstop=2 filetype=ruby
+autocmd BufNewFile,BufRead *file,!Dockerfile set nowrap tabstop=2 shiftwidth=2 softtabstop=2 filetype=ruby
+autocmd BufNewFile,BufRead Movefile set nowrap tabstop=2 shiftwidth=2 softtabstop=2 filetype=yaml
+
+" YAML
+autocmd BufNewFile,BufRead *.yml set nowrap tabstop=2 shiftwidth=2 softtabstop=2
+autocmd BufNewFile,BufRead *.yaml set nowrap tabstop=2 shiftwidth=2 softtabstop=2
+
+" CoffeeScript
+autocmd BufNewFile,BufRead *.coffee set nowrap tabstop=2 shiftwidth=2 softtabstop=2
+
+" HTML
+autocmd BufNewFile,BufRead *.html set nowrap tabstop=2 shiftwidth=2 softtabstop=2
+
+" JavaScript
+autocmd BufNewFile,BufRead *.js set nowrap tabstop=2 shiftwidth=2 softtabstop=2
+
+" SCSS/SASS
+autocmd BufNewFile,BufRead *.scss set nowrap tabstop=2 shiftwidth=2 softtabstop=2
+autocmd BufNewFile,BufRead *.sass set nowrap tabstop=2 shiftwidth=2 softtabstop=2
+
+" PHP
+autocmd BufNewFile,BufRead *.php set nowrap noexpandtab tabstop=2 shiftwidth=2 softtabstop=2
