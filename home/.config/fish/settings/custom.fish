@@ -174,6 +174,11 @@ if type kubectx >/dev/null 2>&1
     end
 end
 
+## homesick
+if test -d $HOME/.homesick
+    source $HOME/.homesick/repos/homeshick/homeshick.fish
+end
+
 switch (uname)
     ## Mac
     case Darwin

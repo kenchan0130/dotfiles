@@ -1,3 +1,4 @@
+jorgebucaran/fisher
 oh-my-fish/plugin-peco
 oh-my-fish/plugin-tab
 oh-my-fish/theme-bobthefish
@@ -6,3 +7,4 @@ reitzig/sdkman-for-fish
 decors/fish-ghq
 jethrokuan/z
 evanlucas/fish-kubectl-completions
+jorgebucaran/replay.fish
