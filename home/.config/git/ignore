@@ -11,3 +11,6 @@ vendor/bundle/
 
 # VS Code
 .history/
+
+# Claude Code
+.claude/settings.local.json

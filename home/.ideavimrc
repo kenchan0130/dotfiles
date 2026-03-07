@@ -8,7 +8,59 @@ set smartcase
 ""ハイライトを消す場合は:noh[l]
 set hlsearch"
 
+" インサートモードから抜けると自動的にIMEをオフにする
+" これはIdeaVimではサポートされてないのでコメントアウトしている
+" set noimdisable
+" set iminsert=0
+" set noimcmdline
+" inoremap <silent> <ESC> <ESC>:set iminsert=0<CR>
+
+" マウスの入力を受け付ける
+set mouse=a
+
+" 括弧の対応をハイライト
+set showmatch      
+
 "x キー削除でデフォルトレジスタに入れない
 nnoremap x "_x
 vnoremap x "_x
 
+" ノーマルモードでEnterで改行
+noremap <CR> i<CR><Esc>
+
+" vを2回で行末まで移動
+vnoremap v $h
+
+" TABにて対応ペアにジャンプ
+nnoremap <Tab> %
+vnoremap <Tab> %
+
+" j, k による移動を折り返されたテキストでも自然に振る舞うように変更
+nnoremap j gj
+nnoremap k gk
+
+" WebStormのビープ音を消す方法
+set visualbell
+set noerrorbells
+
+" 挿入モード時、ステータスラインの色を変更
+" see: https://sites.google.com/site/fudist/Home/vim-nihongo-ban/vim-color
+let g:hi_insert = 'highlight StatusLine guifg=darkblue guibg=darkyellow gui=none ctermfg=blue ctermbg=yellow cterm=none'
+
+if has('syntax')
+  augroup InsertHook
+    autocmd!
+    autocmd InsertEnter * call s:StatusLine('Enter')
+    autocmd InsertLeave * call s:StatusLine('Leave')
+  augroup END
+endif
+
+"<space>j, <space>kで画面送り
+noremap <Space>j <C-f>
+noremap <Space>k <C-b>
+
+" Ctrl + hjkl でウィンドウ間を移動
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l

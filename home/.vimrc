@@ -142,7 +142,6 @@ function! s:defx_my_settings() abort
 endfunction
 
 " defx settings
-autocmd VimEnter * execute 'Defx'
 nnoremap <silent> <Leader>f :<C-u> Defx <CR>
 
 call defx#custom#option('_', {
