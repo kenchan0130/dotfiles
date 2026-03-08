@@ -170,6 +170,15 @@ if type kubectx >/dev/null 2>&1
     end
 end
 
+## git-wt
+if git wt --init fish >/dev/null 2>&1
+    git wt --init fish | source
+    
+    function wt
+        git wt (git wt | tail -n +2 | peco --prompt='git-wt>' | awk '{print $(NF-1)}')
+    end
+end
+
 switch (uname)
     ## Mac
     case Darwin
