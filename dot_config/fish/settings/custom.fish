@@ -112,15 +112,6 @@ function json2yaml
     ruby -ryaml -rjson -e 'puts YAML.dump(JSON.parse(STDIN.read))' <(printf "%s\n" $v | psub)
 end
 
-## Perl
-if test -d $HOME/perl5
-    source $HOME/perl5/perlbrew/etc/perlbrew.fish
-    bass 'export PERL5LIB=$HOME/perl5/lib/perl5:$HOME/perl5${PERL5LIB+:$PERL5LIB}'
-    set -xg PATH $PATH $HOME/perl5/bin
-    alias ce='carton exec'
-    alias ci='carton install'
-end
-
 ## Go
 if type go >/dev/null 2>&1
     set -xg GOPATH $HOME/.go
@@ -136,6 +127,9 @@ if test -d $HOME/.nodebrew
     end
     alias ne='npm-exec'
     alias ni='npm install'
+end
+if type fnm >/dev/null 2>&1
+    eval (fnm env)
 end
 
 ## Ruby
@@ -156,7 +150,9 @@ if type pyenv >/dev/null 2>&1
 end
 
 # Java
-bass "source $SDKMAN_DIR/bin/sdkman-init.sh"
+if test -f $SDKMAN_DIR/bin/sdkman-init.sh
+    bass "source $SDKMAN_DIR/bin/sdkman-init.sh"
+end
 
 ## Direnv
 if type direnv >/dev/null 2>&1
@@ -172,11 +168,6 @@ if type kubectx >/dev/null 2>&1
             commandline -f repaint
         end
     end
-end
-
-## homesick
-if test -d $HOME/.homesick
-    source $HOME/.homesick/repos/homeshick/homeshick.fish
 end
 
 switch (uname)
