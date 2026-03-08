@@ -18,7 +18,7 @@ brew "grc"
 brew "gh"
 brew "ghq"
 brew "git-delta"
-brew "z"
+brew "fd" # find alternative
 
 
 cask "font-hackgen"
@@ -40,3 +40,4 @@ cask "coteditor"
 cask "the-unarchiver"
 cask "secretive"
 cask "claude-code"
+cask "karabiner-elements"

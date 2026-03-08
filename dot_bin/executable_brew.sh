@@ -1,3 +1,3 @@
 #!/bin/zsh
 
-brew bundle --global
+brew bundle --file="$HOME/Brewfile"
