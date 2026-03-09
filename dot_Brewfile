@@ -19,6 +19,7 @@ brew "gh"
 brew "ghq"
 brew "git-delta"
 brew "fd" # find alternative
+brew "gnupg"
 
 
 cask "font-hackgen"
