@@ -31,8 +31,8 @@ defaults write com.apple.finder ShowStatusBar -bool true
 # Display the path bar
 defaults write com.apple.finder ShowPathbar -bool true
 
-# Enable key repeat for VSCode
-defaults write com.microsoft.VSCode ApplePressAndHoldEnabled -bool false
+# Enable key repeat
+defaults write -g ApplePressAndHoldEnabled -bool false
 
 # Apply soon
 for app in "Dock" \
