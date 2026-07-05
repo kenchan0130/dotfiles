@@ -39,3 +39,7 @@ end
 if test -d /Applications/Secretive.app/
 	set -xg SSH_AUTH_SOCK $HOME/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
 end
+
+if test -d /opt/homebrew/var/run/socktainer/.socktainer/
+    set -xg DOCKER_HOST "unix:///opt/homebrew/var/run/socktainer/.socktainer/container.sock"
+end
